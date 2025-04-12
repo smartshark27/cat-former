@@ -23,3 +23,11 @@ func _on_jump_button_pressed() -> void:
 
 func _on_jump_button_released() -> void:
 	Input.action_release("jump")
+
+
+func _on_meow_button_pressed() -> void:
+	Input.action_press("meow")
+
+
+func _on_meow_button_released() -> void:
+	Input.action_release("meow")

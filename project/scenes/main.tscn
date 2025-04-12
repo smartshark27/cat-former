@@ -1,10 +1,13 @@
-[gd_scene load_steps=16 format=4 uid="uid://c3cptt02ppd05"]
+[gd_scene load_steps=20 format=4 uid="uid://c3cptt02ppd05"]
 
 [ext_resource type="Texture2D" uid="uid://dk6q1tnlp7fmn" path="res://art/Cat_Frames.png" id="1_43pfp"]
 [ext_resource type="Texture2D" uid="uid://byylxrsao6gi4" path="res://art/Tile_Set.png" id="2_0ln7u"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_tdud7"]
 [ext_resource type="Script" path="res://scripts/touch_screen_controls.gd" id="4_6xfdp"]
 [ext_resource type="Texture2D" uid="uid://dixgvuly68g38" path="res://art/DirectionalButton.png" id="5_xopyv"]
+[ext_resource type="Script" path="res://scripts/cat_sounds.gd" id="6_m5p88"]
+[ext_resource type="AudioStream" uid="uid://dqr4npkdfyrbo" path="res://art/Happy Meow.mp3" id="7_qxu51"]
+[ext_resource type="AudioStream" uid="uid://ws7nps2filqm" path="res://art/Angry Meow.mp3" id="8_tyerr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6k5um"]
 texture = ExtResource("2_0ln7u")
@@ -63,6 +66,9 @@ size = Vector2(100, 100)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exn33"]
 size = Vector2(100, 100)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lfscv"]
+size = Vector2(100, 100)
+
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="ColorRect" parent="."]
@@ -108,12 +114,27 @@ passby_press = true
 visibility_mode = 1
 
 [node name="JumpButton" type="TouchScreenButton" parent="TouchScreenControls"]
-position = Vector2(1034, 520)
+position = Vector2(1045, 520)
 rotation = 1.5708
 texture_normal = ExtResource("5_xopyv")
 shape = SubResource("RectangleShape2D_exn33")
 passby_press = true
 visibility_mode = 1
+
+[node name="MeowButton" type="TouchScreenButton" parent="TouchScreenControls"]
+position = Vector2(833, 520)
+texture_normal = ExtResource("5_xopyv")
+shape = SubResource("RectangleShape2D_lfscv")
+visibility_mode = 1
+
+[node name="CatSounds" type="Node2D" parent="."]
+script = ExtResource("6_m5p88")
+
+[node name="HappyMeow" type="AudioStreamPlayer2D" parent="CatSounds"]
+stream = ExtResource("7_qxu51")
+
+[node name="AngryMeow" type="AudioStreamPlayer2D" parent="CatSounds"]
+stream = ExtResource("8_tyerr")
 
 [connection signal="pressed" from="TouchScreenControls/LeftButton" to="TouchScreenControls" method="_on_left_button_pressed"]
 [connection signal="released" from="TouchScreenControls/LeftButton" to="TouchScreenControls" method="_on_left_button_released"]
@@ -121,3 +142,5 @@ visibility_mode = 1
 [connection signal="released" from="TouchScreenControls/RightButton" to="TouchScreenControls" method="_on_right_button_released"]
 [connection signal="pressed" from="TouchScreenControls/JumpButton" to="TouchScreenControls" method="_on_jump_button_pressed"]
 [connection signal="released" from="TouchScreenControls/JumpButton" to="TouchScreenControls" method="_on_jump_button_released"]
+[connection signal="pressed" from="TouchScreenControls/MeowButton" to="TouchScreenControls" method="_on_meow_button_pressed"]
+[connection signal="released" from="TouchScreenControls/MeowButton" to="TouchScreenControls" method="_on_meow_button_released"]
