@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=4 uid="uid://c3cptt02ppd05"]
+[gd_scene load_steps=16 format=4 uid="uid://c3cptt02ppd05"]
 
 [ext_resource type="Texture2D" uid="uid://dk6q1tnlp7fmn" path="res://art/Cat_Frames.png" id="1_43pfp"]
 [ext_resource type="Texture2D" uid="uid://byylxrsao6gi4" path="res://art/Tile_Set.png" id="2_0ln7u"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_tdud7"]
 [ext_resource type="Script" path="res://scripts/touch_screen_controls.gd" id="4_6xfdp"]
+[ext_resource type="Texture2D" uid="uid://dixgvuly68g38" path="res://art/DirectionalButton.png" id="5_xopyv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6k5um"]
 texture = ExtResource("2_0ln7u")
@@ -53,6 +54,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t4emr"]
 size = Vector2(64, 63)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6no27"]
+size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f5xi4"]
+size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_exn33"]
+size = Vector2(100, 100)
+
 [node name="Main" type="Node2D"]
 
 [node name="Background" type="ColorRect" parent="."]
@@ -79,35 +89,35 @@ position = Vector2(11, 32.5)
 shape = SubResource("RectangleShape2D_t4emr")
 
 [node name="TouchScreenControls" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.203922)
 script = ExtResource("4_6xfdp")
 
-[node name="LeftButton" type="Button" parent="TouchScreenControls"]
-offset_left = 99.0
-offset_top = 530.0
-offset_right = 199.0
-offset_bottom = 630.0
-focus_mode = 0
-text = "<"
+[node name="LeftButton" type="TouchScreenButton" parent="TouchScreenControls"]
+position = Vector2(108, 520)
+texture_normal = ExtResource("5_xopyv")
+shape = SubResource("RectangleShape2D_6no27")
+passby_press = true
+visibility_mode = 1
 
-[node name="RightButton" type="Button" parent="TouchScreenControls"]
-offset_left = 221.0
-offset_top = 530.0
-offset_right = 321.0
-offset_bottom = 630.0
-focus_mode = 0
-text = ">"
+[node name="RightButton" type="TouchScreenButton" parent="TouchScreenControls"]
+position = Vector2(318, 520)
+scale = Vector2(-1, 1)
+texture_normal = ExtResource("5_xopyv")
+shape = SubResource("RectangleShape2D_f5xi4")
+passby_press = true
+visibility_mode = 1
 
-[node name="JumpButton" type="Button" parent="TouchScreenControls"]
-offset_left = 922.0
-offset_top = 530.0
-offset_right = 1022.0
-offset_bottom = 630.0
-focus_mode = 0
-text = "^"
+[node name="JumpButton" type="TouchScreenButton" parent="TouchScreenControls"]
+position = Vector2(1034, 520)
+rotation = 1.5708
+texture_normal = ExtResource("5_xopyv")
+shape = SubResource("RectangleShape2D_exn33")
+passby_press = true
+visibility_mode = 1
 
-[connection signal="button_down" from="TouchScreenControls/LeftButton" to="TouchScreenControls" method="_on_left_button_button_down"]
-[connection signal="button_up" from="TouchScreenControls/LeftButton" to="TouchScreenControls" method="_on_left_button_button_up"]
-[connection signal="button_down" from="TouchScreenControls/RightButton" to="TouchScreenControls" method="_on_right_button_button_down"]
-[connection signal="button_up" from="TouchScreenControls/RightButton" to="TouchScreenControls" method="_on_right_button_button_up"]
-[connection signal="button_down" from="TouchScreenControls/JumpButton" to="TouchScreenControls" method="_on_jump_button_button_down"]
-[connection signal="button_up" from="TouchScreenControls/JumpButton" to="TouchScreenControls" method="_on_jump_button_button_up"]
+[connection signal="pressed" from="TouchScreenControls/LeftButton" to="TouchScreenControls" method="_on_left_button_pressed"]
+[connection signal="released" from="TouchScreenControls/LeftButton" to="TouchScreenControls" method="_on_left_button_released"]
+[connection signal="pressed" from="TouchScreenControls/RightButton" to="TouchScreenControls" method="_on_right_button_pressed"]
+[connection signal="released" from="TouchScreenControls/RightButton" to="TouchScreenControls" method="_on_right_button_released"]
+[connection signal="pressed" from="TouchScreenControls/JumpButton" to="TouchScreenControls" method="_on_jump_button_pressed"]
+[connection signal="released" from="TouchScreenControls/JumpButton" to="TouchScreenControls" method="_on_jump_button_released"]
