@@ -21,6 +21,13 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
+	_direct()
+	_animate(direction)
+
+	move_and_slide()
+
+
+func _direct():
 	# Flip node on X axis based on walk direction
 	# See https://www.reddit.com/r/godot/comments/191xke2/why_does_function_move_and_slide_break_scalex/
 	# for why this is so unintuitive
@@ -31,10 +38,19 @@ func _physics_process(delta: float) -> void:
 		scale.y = 1
 		set_rotation(0)
 
-	# Play walk animation if walking on ground
-	if direction and is_on_floor():
-		$AnimatedSprite2D.play()
-	else:
-		$AnimatedSprite2D.stop()
 
-	move_and_slide()
+func _animate(direction: float):
+	# Animate the player
+	if is_on_floor() and Input.is_action_just_pressed("jump"):
+		# Jump
+		$AnimatedSprite2D.play("jump")
+	elif not is_on_floor() and velocity.y > 0 and velocity.y < 10:
+		# Fall
+		$AnimatedSprite2D.play("fall")
+	elif is_on_floor() and direction:
+		# Walk
+		$AnimatedSprite2D.play("walk")
+	elif is_on_floor():
+		# Stop
+		$AnimatedSprite2D.animation = "walk"
+		$AnimatedSprite2D.stop()
